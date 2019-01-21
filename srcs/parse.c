@@ -6,7 +6,7 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/27 14:46:56 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/18 12:01:51 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/21 17:50:33 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,8 @@ int		file_open(char *filename, t_map **map, t_file **file)
 {
 	int fd;
 
-	fd = open(filename, O_RDONLY);
+	if ((fd = open(filename, O_RDONLY)) < 1)
+		return (0);
 	file_read(fd, map, *file);
 	close(fd);
 	return (1);

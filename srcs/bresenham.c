@@ -6,7 +6,7 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/27 10:28:25 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/18 11:58:52 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/21 16:56:20 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,9 +26,9 @@ void	bres_draw_x(t_bresenham data, t_file file, t_point point)
 			data.cumul -= data.dx;
 			data.y += data.yinc;
 		}
-		if ((CURZ <= NEXZ || CURZ >= NEXZ) && abs(CURZ) > 0 && abs(NEXZ) > 0)
+		if ((CURZ <= NEXZ || CURZ >= NEXZ) && fabs(CURZ) > 0 && fabs(NEXZ) > 0)
 			color_converter(file.color.endcolor, &file);
-		else if ((file.current_z + file.next_z) * file.data->el > 5)
+		else if (fabs(CURZ + NEXZ) > 0.01)
 			get_color(&data, &file, &point);
 		else
 			color_converter(0xFFFFFF, &file);
@@ -50,9 +50,9 @@ void	bres_draw_y(t_bresenham data, t_file file, t_point point)
 			data.cumul -= data.dy;
 			data.x += data.xinc;
 		}
-		if ((CURZ <= NEXZ || CURZ >= NEXZ) && abs(CURZ) > 0 && abs(NEXZ) > 0)
+		if ((CURZ <= NEXZ || CURZ >= NEXZ) && fabs(CURZ) > 0 && fabs(NEXZ) > 0)
 			color_converter(file.color.endcolor, &file);
-		else if ((file.current_z + file.next_z) * file.data->el > 5)
+		else if (fabs(CURZ + NEXZ) > 0.01)
 			get_color(&data, &file, &point);
 		else
 			color_converter(0xFFFFFF, &file);

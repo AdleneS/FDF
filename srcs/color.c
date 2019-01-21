@@ -6,7 +6,7 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/17 16:52:56 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/18 12:17:35 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/21 13:54:37 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,7 +45,7 @@ int		get_color(t_bresenham *data, t_file *file, t_point *point)
 		per = percent(point->xi, point->xf, data->x);
 	else
 		per = percent(point->yi, point->yf, data->y);
-	if (-abs(file->current_z) > -abs(file->next_z))
+	if (-fabs(file->current_z) > -fabs(file->next_z))
 	{
 		RED = get_light((SCOLOR >> 16) & 0xFF, (ECOLOR >> 16) & 0xFF, per);
 		GREEN = get_light((SCOLOR >> 8) & 0xFF, (ECOLOR >> 8) & 0xFF, per);
