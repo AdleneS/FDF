@@ -6,7 +6,7 @@
 #    By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/02 17:01:24 by asaba        #+#   ##    ##    #+#        #
-#    Updated: 2019/01/21 17:51:45 by asaba       ###    #+. /#+    ###.fr      #
+#    Updated: 2019/01/24 11:14:56 by asaba       ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -16,7 +16,7 @@ NAME = fdf
 CC = gcc
 
 SRC = srcs/main.c srcs/bresenham.c srcs/parse.c srcs/algo.c srcs/input.c
-SRC += srcs/newimg.c srcs/color.c srcs/error.c srcs/hud.c
+SRC += srcs/newimg.c srcs/color.c srcs/error.c srcs/hud.c srcs/useful.c
 
 OBJ = $(SRC:.c=.o)
 

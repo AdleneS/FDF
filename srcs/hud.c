@@ -6,14 +6,14 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/21 17:51:25 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/21 19:28:29 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/24 11:12:56 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void		hud1(t_file *file)
+void		hud_inputs(t_file *file)
 {
 	mlx_string_put(MLX, WIN, 5, 5, 0xFFFF00, "Inputs:");
 	mlx_string_put(MLX, WIN, 5, 30, 0xFFFFFF, "Move: Arrows");
@@ -26,23 +26,45 @@ void		hud1(t_file *file)
 	mlx_string_put(MLX, WIN, 5, 1050, file->color.endcolor, "MADE BY ASABA");
 }
 
-void		hud2(t_file *file)
+void		hud_infos(t_file *file)
 {
+	char	*itoa;
+
 	mlx_string_put(MLX, WIN, 5, 230, 0xFFFF00, "Infos:");
-	mlx_string_put(MLX, WIN, 5, 255, 0xFFFFFF,
-	ft_strjoin("X: ", ft_itoa(file->s_x)));
-	mlx_string_put(MLX, WIN, 100, 255, 0xFFFFFF,
-	ft_strjoin("Y: ", ft_itoa(file->s_y)));
-	mlx_string_put(MLX, WIN, 5, 280, 0xFFFFFF,
-	ft_strjoin("ZOOM: ", ft_itoa(file->data->of)));
-	mlx_string_put(MLX, WIN, 5, 305, 0xFFFFFF, ft_strjoin("Elevation: ",
-	ft_itoa(file->data->el * 10 * -1)));
-	mlx_string_put(MLX, WIN, 5, 330, 0xFFFFFF, ft_strjoin("Rotation X: ",
-	ft_itoa(ROT)));
-	mlx_string_put(MLX, WIN, 5, 355, 0xFFFFFF, ft_strjoin("Rotation Y: ",
-	ft_itoa(ROT2)));
-	mlx_string_put(MLX, WIN, 5, 380, 0xFFFFFF, ft_strjoin("Rotation Z: ",
-	ft_itoa(ROT3)));
+	mlx_string_put(MLX, WIN, 5, 255, 0xFFFFFF, "X: ");
+	itoa = ft_itoa(file->s_x);
+	mlx_string_put(MLX, WIN, 30, 255, 0xFFFFFF, itoa);
+	free(itoa);
+	mlx_string_put(MLX, WIN, 100, 255, 0xFFFFFF, "Y: ");
+	itoa = ft_itoa(file->s_y);
+	mlx_string_put(MLX, WIN, 130, 255, 0xFFFFFF, itoa);
+	free(itoa);
+	mlx_string_put(MLX, WIN, 5, 280, 0xFFFFFF, "ZOOM: ");
+	itoa = ft_itoa(file->data->of);
+	mlx_string_put(MLX, WIN, 60, 280, 0xFFFFFF, itoa);
+	free(itoa);
+	itoa = ft_itoa(file->data->el * 10 * -1);
+	mlx_string_put(MLX, WIN, 5, 305, 0xFFFFFF, "Elevation: ");
+	mlx_string_put(MLX, WIN, 125, 305, 0xFFFFFF, itoa);
+	free(itoa);
+}
+
+void		hud_rotation(t_file *file)
+{
+	char	*itoa;
+
+	mlx_string_put(MLX, WIN, 5, 330, 0xFFFFFF, "Rotation X: ");
+	itoa = ft_itoa(ROT);
+	mlx_string_put(MLX, WIN, 125, 330, 0xFFFFFF, itoa);
+	free(itoa);
+	mlx_string_put(MLX, WIN, 5, 355, 0xFFFFFF, "Rotation Y: ");
+	itoa = ft_itoa(ROT2);
+	mlx_string_put(MLX, WIN, 125, 355, 0xFFFFFF, itoa);
+	free(itoa);
+	mlx_string_put(MLX, WIN, 5, 380, 0xFFFFFF, "Rotation Z: ");
+	itoa = ft_itoa(ROT3);
+	mlx_string_put(MLX, WIN, 125, 380, 0xFFFFFF, itoa);
+	free(itoa);
 }
 
 void		border_input(t_file *file)

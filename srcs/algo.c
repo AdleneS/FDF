@@ -6,7 +6,7 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 5018/11/27 15:18:49 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/21 19:23:34 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/24 12:08:45 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,24 +23,26 @@
 
 void	fdf_xyz(t_map *map, t_file *file)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 0;
-	file->xyz = (t_axis **)malloc(sizeof(t_axis) * ((file->map_height)));
+	if (!(file->xyz = (t_axis **)malloc(sizeof(t_axis) * (HEIGHT))))
+		error("Malloc Error");
 	while (map)
 	{
 		j = -1;
-		file->xyz[i] = (t_axis*)malloc(sizeof(t_axis) * file->map_width);
+		if (!(file->xyz[i] = (t_axis*)malloc(sizeof(t_axis) * (WIDTH))))
+			error("Malloc Error");
 		while (++j < file->map_width)
 		{
-			X = i * -cos(ROT) - j * sin(ROT);
-			Y = i * -sin(ROT) + j * cos(ROT);
+			X = (i - HEIGHT / 2) * -cos(ROT) - (j - WIDTH / 2) * sin(ROT);
+			Y = (i - HEIGHT / 2) * -sin(ROT) + (j - WIDTH / 2) * cos(ROT);
 			Z = map->line[j] * EL;
 			file->xyz[i][j].true_z = Z * EL;
-			X = X * cos(ROT2) + map->line[j] * EL * sin(ROT2);
+			X = (X * cos(ROT2) + map->line[j] * EL * sin(ROT2));
 			Z = X * -sin(ROT2) + map->line[j] * EL * cos(ROT2);
-			Y = Y * cos(ROT3) + map->line[j] * EL * sin(ROT3);
+			Y = (Y * cos(ROT3) + map->line[j] * EL * sin(ROT3));
 			Z = Y * -sin(ROT3) + map->line[j] * EL * cos(ROT3);
 		}
 		i++;
@@ -50,9 +52,16 @@ void	fdf_xyz(t_map *map, t_file *file)
 
 void	fdf_display(t_file *file)
 {
-	file->img = mlx_new_image(MLX, 1920, 1080);
-	file->imgdata = mlx_get_data_addr(file->img, &file->bpp, &file->sizeline,
-		&file->end);
+	int i;
+
+	i = -1;
+	if (!(file->img = mlx_new_image(MLX, 1920, 1080)))
+		error("Image Error");
+	if (!(file->imgdata = mlx_get_data_addr(file->img, &file->bpp, &file->sl,
+		&file->end)))
+		error("Image Error");
+	while (++i < HEIGHT)
+		free(file->xyz[i]);
 	free(file->xyz);
 	fdf_xyz(file->map, file);
 	fdf_algo(file);
@@ -60,8 +69,9 @@ void	fdf_display(t_file *file)
 	border_input(file);
 	border_info(file);
 	mlx_put_image_to_window(MLX, WIN, file->img, 0, 0);
-	hud1(file);
-	hud2(file);
+	hud_inputs(file);
+	hud_infos(file);
+	hud_rotation(file);
 	mlx_destroy_image(MLX, file->img);
 }
 
@@ -72,10 +82,10 @@ void	fdf_algo(t_file *file)
 	int		j;
 
 	i = 0;
-	while (i < file->map_height)
+	while (i < HEIGHT)
 	{
 		j = -1;
-		while (++j < file->map_width - 1)
+		while (++j < WIDTH - 1)
 		{
 			p.xi = X * OF + S_X;
 			p.yi = Y * OF + S_Y + file->xyz[i][j].z;
@@ -96,10 +106,10 @@ void	fdf_algo2(t_file *file)
 	t_point	p;
 
 	i = 0;
-	while (i + 1 < file->map_height)
+	while (i + 1 < HEIGHT)
 	{
 		j = -1;
-		while (++j < file->map_width)
+		while (++j < WIDTH)
 		{
 			p.xi = X * OF + S_X;
 			p.yi = Y * OF + S_Y + file->xyz[i][j].z;

@@ -6,7 +6,7 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/22 12:10:44 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/21 18:42:28 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/24 11:54:22 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,14 +26,16 @@ int		main(int argc, char **argv)
 		return (0);
 	file->map = NULL;
 	if (!(file_open(argv[1], &file->map, &file)))
-		return (error("Map Error\n"));
+		return (error("Map Error"));
 	if (!(session(file)))
-		return (0);
+		return (error("Init Error"));
 	ft_init(file);
-	new_image(file);
+	if (!(new_image(file)) || !file->map)
+		return (error("Image Error"));
 	fdf_xyz(file->map, file);
 	fdf_display(file);
 	mlx_hook(WIN, 2, (1L << 0), get_key, (void *)file);
+	mlx_hook(WIN, 17, 0, wasted, NULL);
 	mlx_loop(MLX);
 	return (1);
 }

@@ -6,21 +6,21 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/17 16:52:56 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/21 13:54:37 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/24 12:09:36 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	color_converter(int hexvalue, t_file *file)
+void			color_converter(int hexvalue, t_file *file)
 {
 	RED = ((hexvalue >> 16) & 0xFF);
 	GREEN = ((hexvalue >> 8) & 0xFF);
 	BLUE = ((hexvalue) & 0xFF);
 }
 
-double	percent(int start, int end, int current)
+static double	percent(int start, int end, int current)
 {
 	double placement;
 	double distance;
@@ -30,12 +30,12 @@ double	percent(int start, int end, int current)
 	return ((distance == 0) ? 1.0 : (placement / distance));
 }
 
-int		get_light(int start, int end, double per)
+static int		get_light(int start, int end, double per)
 {
 	return ((int)((1 - per) * start + per * end));
 }
 
-int		get_color(t_bresenham *data, t_file *file, t_point *point)
+int				get_color(t_bresenham *data, t_file *file, t_point *point)
 {
 	double	per;
 

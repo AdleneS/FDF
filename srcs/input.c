@@ -6,7 +6,7 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/11 11:09:46 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/21 19:19:58 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/22 12:22:57 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,20 +25,13 @@ void	exit_prog(int key, t_file *file)
 void	zoom(int key, t_file *file)
 {
 	if (key == 18)
-	{
 		file->color.startcolor = rand();
-		fdf_display(file);
-	}
-	if (key == 19)
-	{
+	else if (key == 19)
 		file->color.endcolor = rand();
-		fdf_display(file);
-	}
-	if (key == 69 || key == 78)
-	{
+	else if (key == 69 || key == 78)
 		file->data->of += (key == 69) ? 1 : -1;
-		fdf_display(file);
-	}
+	else
+		return ;
 }
 
 void	elevation(t_file *file)
@@ -67,7 +60,6 @@ void	move(int key, t_file *file)
 		file->data->rot3 += (key == 13) ? 0.05 : -0.05;
 	else
 		return ;
-	fdf_display(file);
 }
 
 int		get_key(int key, void *file)
@@ -80,5 +72,6 @@ int		get_key(int key, void *file)
 	elevation(tmp);
 	move(key, tmp);
 	exit_prog(key, tmp);
+	fdf_display(file);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: asaba <asaba@student.le-101.fr>            +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/27 10:28:18 by asaba        #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/21 19:23:38 by asaba       ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/24 12:09:57 by asaba       ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,6 +36,8 @@
 # define ROT		file->data->rot
 # define ROT2		file->data->rot2
 # define ROT3		file->data->rot3
+# define HEIGHT		file->map_height
+# define WIDTH		file->map_width
 
 typedef struct		s_color
 {
@@ -116,31 +118,60 @@ typedef struct		s_file
 
 	int				bpp;
 	int				end;
-	int				sizeline;
+	int				sl;
 
 	t_color			color;
 }					t_file;
 
+/*
+** READ
+*/
 
 int					file_open(char *file, t_map **map, t_file **app);
-int					file_read(int fd, t_map	**map, t_file *app);
-int					file_storelist(t_map **orig_list, t_file *app, char **splitline);
-int					get_z(t_map *map, int x, int y);
-int					get_key(int key, void *param);
 int					new_image(t_file *file);
-int					get_color(t_bresenham *data, t_file *file, t_point *point);
-int					session(t_file *file);
+
+/*
+** CHECK
+*/
+
+int					checkline(char **splitline, int count);
+int					linecount(char **splitline);
 int					error(char *issue);
-void				bresenham(t_point point, t_file file);
-void				fdf_display(t_file *param);
-void				color_converter(int hexvalue, t_file *file);
+int					wasted(void);
+void				freesplit(char ***splitline);
+
+/*
+** SETUP
+*/
+
+int					session(t_file *file);
 void				fdf_xyz(t_map *map, t_file *file);
 void				ft_init(t_file *fdf);
+
+/*
+** COLORS
+*/
+
+int					get_color(t_bresenham *data, t_file *file, t_point *point);
+void				color_converter(int hexvalue, t_file *file);
+
+/*
+** TRACING
+*/
+
+int					get_key(int key, void *param);
+void				fdf_display(t_file *param);
+void				bresenham(t_point point, t_file file);
 void				ft_pixel_put(t_file *file, int x, int y);
 void				fdf_algo(t_file *file);
 void				fdf_algo2(t_file *file);
-void				hud1(t_file *file);
-void				hud2(t_file *file);
+
+/*
+** HUD
+*/
+void				hud_inputs(t_file *file);
+void				hud_infos(t_file *file);
+void				hud_rotation(t_file *file);
 void				border_input(t_file *file);
 void				border_info(t_file *file);
 
